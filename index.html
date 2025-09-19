@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procare: Platform Evaluation Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-dark: #120044;
+            --primary-darker: #030268;
+            --primary: #3028a1;
+            --primary-light: #5951ff;
+            --primary-lighter: #7a7fff;
+            --primary-lightest: #b3b0ff;
+            --primary-pale: #cdcbff;
+            --primary-faint: #f0f0ff;
+            --secondary: #e53e3e;
+            --secondary-light: #fc8181;
+            --secondary-pale: #fed7d7;
+            --neutral-warm: #dcd7bf;
+            --neutral-light: #edeadd;
+            --neutral-lighter: #f7f5f2;
+            --text-dark: #1f1f1f;
+            --text-medium: #575757;
+            --text-light: #9d9d9d;
+            --gray-light: #d7d7d7;
+            --gray-lighter: #e6e6e6;
+            --gray-lightest: #f2f2f2;
+            --white-soft: #fbfbfb;
+            --white: #ffffff;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--white);
+            scroll-behavior: smooth;
+        }
+        
+        /* Navigation Sidebar */
+        .sidebar-nav {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: var(--white);
+            border-right: 1px solid var(--gray-lighter);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .sidebar-nav.collapsed {
+            width: 60px;
+        }
+        
+        .nav-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-lighter);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--white);
+        }
+        
+        .nav-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sidebar-nav.collapsed .nav-header h3 {
+            opacity: 0;
+        }
+        
+        .nav-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 18px;
+            transition: background 0.3s ease;
+            min-width: 35px;
+        }
+        
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .nav-links {
+            list-style: none;
+            padding: 10px 0;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .nav-link:hover {
+            background: var(--primary-faint);
+            color: var(--primary);
+            padding-left: 25px;
+        }
+        
+        .nav-link.active {
+            color: var(--primary);
+            background: var(--primary-faint);
+            border-left: 3px solid var(--primary);
+            font-weight: 600;
+        }
+        
+        .sidebar-nav.collapsed .nav-link {
+            padding: 12px 10px;
+            text-align: center;
+        }
+        
+        .sidebar-nav.collapsed .nav-link span {
+            display: none;
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .main-content.expanded {
+            margin-left: 60px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            padding: 70px 0;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header h1 {
+            font-size: 46px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+        
+        .header p {
+            font-size: 19px;
+            font-weight: 300;
+            opacity: 0.95;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 20px;
+        }
+        
+        /* Sections */
+        .section {
+            margin-bottom: 55px;
+        }
+        
+        .section h2 {
+            color: var(--primary-dark);
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-light);
+            position: relative;
+        }
+        
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 90px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        /* Initiative Cards */
+        .initiative-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .initiative-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent, var(--primary-faint));
+            border-radius: 0 0 0 100px;
+        }
+        
+        .initiative-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+        }
+        
+        .initiative-card h3 {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .initiative-quote {
+            background: var(--primary-faint);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary);
+            font-style: italic;
+            color: var(--text-medium);
+            font-size: 15px;
+            position: relative;
+        }
+        
+        .initiative-quote::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 48px;
+            color: var(--primary-light);
+            opacity: 0.3;
+        }
+        
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .capability-box {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border-top: 3px solid transparent;
+        }
+        
+        .capability-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        }
+        
+        .capability-box.outreach {
+            border-top-color: var(--primary);
+        }
+        
+        .capability-box.revenue {
+            border-top-color: var(--warning);
+        }
+        
+        .capability-box h5 {
+            color: var(--text-dark);
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .capability-box.outreach h5::before {
+            content: "◆";
+            margin-right: 10px;
+            color: var(--primary);
+            font-size: 14px;
+        }
+        
+        .capability-box.revenue h5::before {
+            content: "◉";
+            margin-right: 10px;
+            color: var(--warning);
+            font-size: 14px;
+        }
+        
+        .capability-list {
+            list-style: none;
+        }
+        
+        .capability-list li {
+            padding: 10px 0;
+            color: var(--text-medium);
+            font-size: 14px;
+            line-height: 1.7;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .capability-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .capability-list li.limitation {
+            color: var(--text-light);
+        }
+        
+        .capability-list li.limitation::before {
+            content: "⚠";
+            color: var(--warning);
+        }
+        
+        /* Winner Badge */
+        .winner-badge {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .winner-badge.outreach {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        }
+        
+        .winner-badge.revenue {
+            background: linear-gradient(135deg, var(--warning), #ffa726);
+        }
+        
+        .winner-badge.context {
+            background: linear-gradient(135deg, var(--text-medium), var(--text-light));
+        }
+        
+        /* Outreach Advantage Box */
+        .outreach-advantage-box {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .outreach-advantage-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .outreach-advantage-box h3 {
+            color: var(--white);
+            font-size: 24px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .outreach-advantage-box p {
+            font-size: 16px;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+            margin: 15px 0;
+        }
+        
+        /* Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table thead {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--white);
+        }
+        
+        .comparison-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .comparison-table td {
+            padding: 14px 15px;
+            border-bottom: 1px solid var(--gray-lighter);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .comparison-table tbody tr {
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-table tbody tr:hover {
+            background: var(--primary-faint);
+        }
+        
+        /* Stakeholder Cards */
+        .stakeholder-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .stakeholder-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stakeholder-card h4 {
+            color: var(--primary-dark);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .stakeholder-card .role {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        /* Team Cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 35px 0;
+        }
+        
+        .team-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .team-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-5px);
+        }
+        
+        .team-card h4 {
+            color: var(--primary-dark);
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .team-card .current-state {
+            color: var(--text-light);
+            font-size: 13px;
+            font-style: italic;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gray-lighter);
+        }
+        
+        .team-card .verdict {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-lighter);
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .team-card .verdict.outreach-wins {
+            color: var(--primary);
+        }
+        
+        .team-card .verdict.revenue-wins {
+            color: var(--warning);
+        }
+        
+        .team-card .verdict.context-dependent {
+            color: var(--text-medium);
+        }
+        
+        /* Solution Mapping */
+        .solution-card {
+            background: linear-gradient(135deg, var(--white), var(--primary-faint));
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solution-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        
+        .solution-card .solution-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .solution-card h4 {
+            color: var(--primary-dark);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-right: 50px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .sidebar-nav {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+            }
+            
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .header {
+                padding: 50px 0;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+            
+            .section h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Sidebar -->
+    <nav class="sidebar-nav" id="sidebarNav">
+        <div class="nav-header">
+            <h3>Navigation</h3>
+            <button class="nav-toggle" id="navToggle">☰</button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#executive-summary" class="nav-link"><i>📊</i><span>Executive Summary</span></a></li>
+            <li><a href="#why-outreach" class="nav-link"><i>🎯</i><span>Why Outreach</span></a></li>
+            <li><a href="#initiatives" class="nav-link"><i>⭐</i><span>Core Initiatives</span></a></li>
+            <li><a href="#processes" class="nav-link"><i>⚙️</i><span>Key Processes</span></a></li>
+            <li><a href="#stakeholders" class="nav-link"><i>👤</i><span>Stakeholder Impact</span></a></li>
+            <li><a href="#teams" class="nav-link"><i>👥</i><span>Team Analysis</span></a></li>
+            <li><a href="#integrations" class="nav-link"><i>🔗</i><span>Technical Analysis</span></a></li>
+            <li><a href="#solution-mapping" class="nav-link"><i>🗺️</i><span>Solution Mapping</span></a></li>
+            <li><a href="#assessment" class="nav-link"><i>✅</i><span>Recommendation</span></a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <div class="container header-content">
+                <h1>Platform Evaluation Analysis</h1>
+                <p>Strategic Assessment of Outreach vs Revenue.io for Procare's Sales Transformation</p>
+            </div>
+        </div>
+        
+        <!-- Executive Summary -->
+        <section id="executive-summary" class="section">
+            <div class="container">
+                <h2>Executive Summary</h2>
+                <div class="initiative-card">
+                    <h3>Platform Transition Context</h3>
+                    <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
+                        Following the Salesloft-Salesforce security breach in September 2025, Procare faces a platform transition with their contract expiring December 31st, 2025. Current automation failures and sync instabilities have forced the 170+ user organization to rely on manual CSV files and data loads to maintain sales operations serving 60,000+ childcare centers.
+                    </p>
+                    <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
+                        <strong>Procare's Operational Challenge:</strong> Leading a high-velocity sales motion with 15-day average cycles, the organization requires reliable automation for ML-driven propensity scoring, opportunity routing to 30 BDRs/SDRs making 75+ daily calls, and seamless Salesforce integration supporting complex custom objects. Platform instability threatens sophisticated revenue operations driving millions in annual revenue.
+                    </p>
+                    <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
+                        <strong>Strategic Recommendation:</strong> Outreach provides the enterprise-grade reliability, advanced automation capabilities, and proven scalability that Procare needs to stabilize operations and support strategic growth initiatives including guided selling standardization and Tuition Express expansion.
+                    </p>
+                    <div style="background: var(--gray-lightest); padding: 20px; border-radius: 8px; margin-top: 25px;">
+                        <h4 style="color: var(--primary-dark); margin-bottom: 15px;">Critical Decision Factors</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 8px 0;">• <strong>Automation Reliability:</strong> Current failures require enterprise-grade platform architecture</li>
+                            <li style="padding: 8px 0;">• <strong>Live Transfer Capability:</strong> Mission-critical for BDR-to-AE handoffs</li>
+                            <li style="padding: 8px 0;">• <strong>Scale Requirements:</strong> 170+ users need proven Fortune 500-grade infrastructure</li>
+                            <li style="padding: 8px 0;">• <strong>Timeline Pressure:</strong> December 2025 deadline requires proven implementation capability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Outreach Section -->
+        <section id="why-outreach" class="section">
+            <div class="container">
+                <h2>Why Outreach is the Strategic Choice</h2>
+                <div class="outreach-advantage-box">
+                    <h3>Enterprise Platform for Complex Sales Operations</h3>
+                    <p>
+                        <strong>Proven Reliability:</strong> Outreach's enterprise-grade platform provides 99.9% automation reliability that Procare needs to eliminate current Salesloft failures. Fortune 500 customers including Salesforce, DocuSign, and Cisco validate scalability for Procare's 170+ user deployment.
+                    </p>
+                    <p>
+                        <strong>Advanced Automation:</strong> Sophisticated trigger system with conditional logic eliminates automation failures plaguing current operations. Automated ownership propagation saves Cassie 8+ hours weekly on manual sequence reassignments.
+                    </p>
+                    <p>
+                        <strong>Salesforce Partnership:</strong> Salesforce's $200 million strategic investment validates Outreach's integration architecture superiority over native alternatives, ensuring ongoing compatibility and innovation.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Core Business Initiatives -->
+        <section id="initiatives" class="section">
+            <div class="container">
+                <h2>Core Business Initiatives</h2>
+                
+                <!-- Guided Selling Implementation -->
+                <div class="initiative-card">
+                    <h3>1. Guided Selling Implementation</h3>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Current State:</strong> Performance disparity across territories - only one director (Jeff) achieves systematic weekly forecasting with structured commit tracking, while other four directors operate reactively without standardized processes. Jeff meets with his 3-4 reps every Monday to establish weekly commits and tracks performance at granular daily level.</p>
+                        <p><strong>Business Impact:</strong> Need to replicate high-performance sales management across all five territories to improve forecast accuracy and rep productivity. Enable all directors to achieve Jeff's level of forecast accuracy within 10% margin of error.</p>
+                        <p><strong>How Outreach Solves:</strong> Outreach's guided selling capabilities can systematize Jeff's proven approach across all territories through automated task prioritization, weekly forecasting workflows, and manager dashboards. The platform's AI-powered recommendations and structured playbooks eliminate the manual spreadsheet management currently required for success.</p>
+                    </div>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Guided Selling</h5>
+                            <ul class="capability-list">
+                                <li>AI-powered task prioritization with ML propensity score integration</li>
+                                <li>Weekly forecasting workflows with automated commit tracking</li>
+                                <li>Manager dashboards showing performance against weekly goals</li>
+                                <li>Smart sequences adapting to engagement patterns</li>
+                                <li>Automated reminders and coaching triggers for consistent management</li>
+                                <li>Custom playbooks replicating high-performer methodologies</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Basic Approach</h5>
+                            <ul class="capability-list">
+                                <li>Salesforce workflow-based task management</li>
+                                <li>Basic prioritization within platform constraints</li>
+                                <li>Standard Salesforce reporting capabilities</li>
+                                <li class="limitation">Limited AI-driven guidance and optimization</li>
+                                <li class="limitation">Constrained by Salesforce governor limits for complex workflows</li>
+                                <li class="limitation">Cannot replicate sophisticated manual processes through automation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="winner-badge outreach">Outreach Advantage: AI-driven systematic approach vs. basic workflows</div>
+                </div>
+                
+                <!-- Enterprise Sales Motion -->
+                <div class="initiative-card">
+                    <h3>2. Enterprise Sales Motion Development</h3>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Current Need:</strong> Building enterprise function requiring account-based approach, longer sales cycles, and team-based selling capabilities beyond current high-velocity motion. This represents strategic expansion into larger deals with multiple stakeholders and complex decision processes.</p>
+                        <p><strong>Business Impact:</strong> Enable expansion into enterprise market segment while maintaining current high-velocity efficiency. Support both 15-day transactional cycles and longer enterprise sales processes within unified platform.</p>
+                        <p><strong>How Outreach Solves:</strong> Outreach's enterprise-grade account management capabilities provide the sophisticated tools needed for complex deal coordination. Smart Account Plans enable multi-threading, Success Plans coordinate buyer-seller alignment, and the platform scales seamlessly between high-velocity and enterprise motions without requiring separate tools.</p>
+                    </div>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Enterprise Capabilities</h5>
+                            <ul class="capability-list">
+                                <li>Smart Account Plans with multi-threading visualization</li>
+                                <li>Success Plans for complex deal coordination and buyer alignment</li>
+                                <li>Account-based reporting and relationship mapping</li>
+                                <li>AI-powered deal health scoring for enterprise complexity</li>
+                                <li>Unified platform supporting both high-velocity and enterprise motions</li>
+                                <li>Advanced workflow automation for longer, more complex sales cycles</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Limited Enterprise Features</h5>
+                            <ul class="capability-list">
+                                <li>Standard Salesforce account management capabilities</li>
+                                <li>Basic opportunity planning functionality</li>
+                                <li>Call-focused relationship building approach</li>
+                                <li class="limitation">Limited account-based selling features beyond Salesforce standard</li>
+                                <li class="limitation">Primarily designed for call-heavy rather than complex enterprise motions</li>
+                                <li class="limitation">May require additional tools for comprehensive enterprise sales support</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="winner-badge outreach">Outreach Advantage: Comprehensive enterprise features vs. basic functionality</div>
+                </div>
+                
+                <!-- Tuition Express Attachment -->
+                <div class="initiative-card">
+                    <h3>3. Tuition Express Attachment Strategy</h3>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Business Context:</strong> Tuition Express is Procare's automated tuition payment processing solution that streamlines payment collection for childcare centers. Increasing TE attachment rates within their existing customer base represents a major company OKR and significant revenue driver, as it improves customer retention while generating additional revenue.</p>
+                        <p><strong>Current Challenge:</strong> Need systematic approach to identify expansion opportunities and execute upselling processes across 60,000+ childcare centers. Account management team currently uses manual processes to monitor customer health and identify TE expansion opportunities.</p>
+                        <p><strong>How Outreach Solves:</strong> Outreach's expansion platform automates the entire TE attachment workflow through health score monitoring, automated triggers based on customer lifecycle stages, and account-based views that surface expansion opportunities. Integration with product usage data enables proactive rather than reactive upselling.</p>
+                    </div>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Expansion Platform</h5>
+                            <ul class="capability-list">
+                                <li>Health score monitoring with automated TE upselling triggers</li>
+                                <li>Account-based expansion views showing opportunity progression</li>
+                                <li>Custom object support for product usage tracking integration</li>
+                                <li>Automated sequences based on customer lifecycle stage and health indicators</li>
+                                <li>Reporting tied directly to company OKR metrics and attachment rate goals</li>
+                                <li>Cross-sell and upsell workflow automation for systematic expansion</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Basic Upselling</h5>
+                            <ul class="capability-list">
+                                <li>Salesforce-based opportunity management for tracking expansion</li>
+                                <li>Standard account tracking and communication logging</li>
+                                <li>Basic workflow automation within Salesforce constraints</li>
+                                <li class="limitation">Limited expansion-specific features beyond standard CRM functionality</li>
+                                <li class="limitation">Manual identification of upselling opportunities without automated triggers</li>
+                                <li class="limitation">Cannot integrate sophisticated health scoring for proactive expansion</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="winner-badge outreach">Outreach Advantage: Purpose-built expansion capabilities vs. basic account management</div>
+                </div>
+                
+                <!-- ML Propensity Scoring Integration -->
+                <div class="initiative-card">
+                    <h3>4. ML Propensity Scoring Integration</h3>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Business Context:</strong> Procare uses machine learning models to rank their 60,000+ childcare center universe by propensity to buy, enabling data-driven territory coverage and systematic pipeline generation. This sophisticated scoring system automatically assigns opportunities to BDRs/SDRs for maximum efficiency.</p>
+                        <p><strong>Current Challenge:</strong> Integration between ML scoring system and sales engagement platform requires reliable, real-time data flow to ensure reps work highest-value opportunities first. Current Salesloft automation failures disrupt this critical workflow.</p>
+                        <p><strong>How Outreach Solves:</strong> Outreach's enterprise API architecture seamlessly integrates with external ML systems, supporting real-time score updates that trigger automated workflow changes. Advanced conditional logic handles complex business rules while sophisticated data integration ensures scoring changes immediately impact rep prioritization.</p>
+                    </div>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's ML Integration</h5>
+                            <ul class="capability-list">
+                                <li>Enterprise APIs connecting directly to external ML systems and data warehouses</li>
+                                <li>Real-time score updates triggering automated workflow changes</li>
+                                <li>Sophisticated conditional logic supporting complex business rules</li>
+                                <li>Advanced trigger system handling high-volume score changes without throttling</li>
+                                <li>Native integration with data platforms like Snowflake for advanced analytics</li>
+                                <li>Automated task prioritization based on dynamic propensity score changes</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Limited Integration</h5>
+                            <ul class="capability-list">
+                                <li>Score updates via Salesforce field changes and basic workflows</li>
+                                <li>Direct integration within Salesforce ecosystem</li>
+                                <li>Standard Salesforce automation capabilities for score processing</li>
+                                <li class="limitation">Governor limits may impact high-volume ML score processing</li>
+                                <li class="limitation">Limited to systems that can integrate directly with Salesforce</li>
+                                <li class="limitation">Cannot support complex real-time integrations with external ML platforms</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="winner-badge outreach">Outreach Advantage: Unlimited ML integration vs. Salesforce constraints</div>
+                </div>
+                
+                <!-- Multi-Motion Sales Support -->
+                <div class="initiative-card">
+                    <h3>5. Multi-Motion Sales Support</h3>
+                    <div style="margin: 20px 0;">
+                        <p><strong>Business Context:</strong> Procare operates multiple distinct sales motions simultaneously: BDR cold outbound prospecting, SDR warm inbound response, AE relationship management and demo delivery, implementation team customer onboarding, and account management team expansion/retention. Each motion requires different sequences, reporting, and success metrics.</p>
+                        <p><strong>Current Challenge:</strong> Platform must support diverse workflows from high-volume cold calling to complex post-sale customer communications. Implementation team currently uses Salesloft despite it being "bastardization" for their post-sale needs, creating platform management complexity.</p>
+                        <p><strong>How Outreach Solves:</strong> Outreach's multi-motion architecture provides role-based workflows, custom object support for different process types, and unified platform management while maintaining specialized functionality for each team. Advanced sequences with branching logic accommodate everything from simple outbound touches to complex implementation workflows.</p>
+                    </div>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Multi-Motion Excellence</h5>
+                            <ul class="capability-list">
+                                <li>Purpose-built for complex organizations with diverse sales functions</li>
+                                <li>Advanced sequences with sophisticated branching and conditional logic</li>
+                                <li>Role-based workflows supporting all sales functions simultaneously</li>
+                                <li>Account-based features for AE relationship management and enterprise deals</li>
+                                <li>Custom object support enabling case management alongside opportunities</li>
+                                <li>Unified platform administration while maintaining team-specific functionality</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Call-Heavy Focus</h5>
+                            <ul class="capability-list">
+                                <li>Optimized for call-heavy sales motions (historical RingDNA focus)</li>
+                                <li>Basic sequence capabilities within Salesforce constraints</li>
+                                <li>Native dialer functionality for calling-focused teams</li>
+                                <li class="limitation">Limited branching and conditional logic for complex workflows</li>
+                                <li class="limitation">May not adequately support diverse BDR/SDR/AE/Implementation workflow needs</li>
+                                <li class="limitation">Primarily designed for single motion rather than multi-motion complexity</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="winner-badge outreach">Outreach Advantage: Built for complexity vs. single-motion optimization</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Key Processes -->
+        <section id="processes" class="section">
+            <div class="container">
+                <h2>Key Process Analysis</h2>
+                
+                <div class="initiative-card">
+                    <h3>1. Live Call Transfer Process</h3>
+                    <div style="margin: 15px 0;">
+                        <p><strong>Business Process:</strong> BDR connects with interested prospect → Slack notification to available AE → Live transfer via dialer → Demo/close. This warm handoff process is critical for Procare's high-velocity motion, ensuring hot prospects don't cool off during transitions.</p>
+                        <p><strong>Current Challenge:</strong> Transfer functionality must be reliable and seamless to maintain prospect engagement during BDR-to-AE handoffs. Any technical issues or delays can result in lost opportunities.</p>
+                        <p><strong>Why This Matters:</strong> Live transfers preserve prospect momentum and enable immediate qualification-to-close workflow that drives Procare's 15-day sales cycle efficiency.</p>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Transfer Capabilities</h5>
+                            <ul class="capability-list">
+                                <li>Native dialer with warm transfer and call merge capabilities</li>
+                                <li>Conference calling functionality for introductions before transfer completion</li>
+                                <li>Conversation intelligence continuity throughout handoff process</li>
+                                <li>Advanced call analytics and performance tracking for transfer success rates</li>
+                                <li>Integration with team messaging for seamless AE notification workflows</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Transfer Features</h5>
+                            <ul class="capability-list">
+                                <li>Native dialer with call transfer functionality</li>
+                                <li>Standard call quality and transfer capabilities</li>
+                                <li>Salesforce-integrated call logging for transferred calls</li>
+                                <li class="limitation">Less sophisticated conversation intelligence during transfers</li>
+                                <li class="limitation">Limited advanced analytics for transfer performance optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="initiative-card">
+                    <h3>2. Multi-Object Activity Logging</h3>
+                    <div style="margin: 15px 0;">
+                        <p><strong>Business Process:</strong> Sales activities must route intelligently to opportunities (active sales) OR cases (implementation/support) based on contact lifecycle stage, not historical records. This complex routing ensures proper activity attribution across different business processes.</p>
+                        <p><strong>Current Challenge:</strong> Salesloft attempts to log everything to first opportunity ever created rather than current active records, breaking proper attribution and SLA tracking across sales and post-sales teams.</p>
+                        <p><strong>Why This Matters:</strong> Accurate activity attribution enables proper reporting, SLA compliance, and ensures each team has visibility into relevant customer interactions without noise from other processes.</p>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Intelligent Routing</h5>
+                            <ul class="capability-list">
+                                <li>Advanced business logic-based activity routing to correct objects</li>
+                                <li>Sophisticated field mapping for complex Salesforce configurations</li>
+                                <li>Conflict resolution handling multiple object scenarios intelligently</li>
+                                <li>Custom object support for opportunities, cases, campaigns, and custom processes</li>
+                                <li>Proven success with complex enterprise Salesforce implementations</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Native Limitations</h5>
+                            <ul class="capability-list">
+                                <li>Direct logging to Salesforce objects without external sync complexity</li>
+                                <li>Native integration with Salesforce security and permission models</li>
+                                <li>Standard Salesforce activity management capabilities</li>
+                                <li class="limitation">Customer reports: "limitations with record access requirements"</li>
+                                <li class="limitation">May hit Salesforce data limits with high-volume activity logging</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="initiative-card">
+                    <h3>3. Automated Ownership Propagation</h3>
+                    <div style="margin: 15px 0;">
+                        <p><strong>Business Process:</strong> When reps leave or territories change, sequences must transfer to new owners without disrupting prospect experience. This includes transferring active sequences, tasks, and complete activity history while maintaining communication continuity.</p>
+                        <p><strong>Current Challenge:</strong> Cassie currently spends 8+ hours weekly manually reassigning sequences when ownership changes occur, creating administrative burden and potential for prospects to fall through cracks during transitions.</p>
+                        <p><strong>Why This Matters:</strong> Automated ownership management ensures seamless prospect experience during organizational changes while eliminating significant administrative overhead that diverts resources from revenue-generating activities.</p>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Automation Excellence</h5>
+                            <ul class="capability-list">
+                                <li>Automated ownership propagation triggered by Salesforce changes</li>
+                                <li>Seamless transfer of sequences, tasks, and complete activity history</li>
+                                <li>Maintains prospect experience and communication continuity during transitions</li>
+                                <li>Eliminates 8+ hours weekly of manual administrative work</li>
+                                <li>Configurable rules for different ownership change scenarios and business logic</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Manual Dependency</h5>
+                            <ul class="capability-list">
+                                <li>Leverages Salesforce ownership and territory management systems</li>
+                                <li>Native integration with standard Salesforce assignment rules</li>
+                                <li>Basic Salesforce automation capabilities for ownership changes</li>
+                                <li class="limitation">Limited automation beyond basic Salesforce workflow capabilities</li>
+                                <li class="limitation">Likely still requires manual sequence reassignment work</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="initiative-card">
+                    <h3>4. High-Volume Calling Infrastructure</h3>
+                    <div style="margin: 15px 0;">
+                        <p><strong>Business Process:</strong> 30 BDRs making 75+ calls daily across geographic territories requiring reliable dialer, accurate disposition tracking, and comprehensive performance analytics. This high-volume operation demands enterprise-grade infrastructure that can handle scale without degradation.</p>
+                        <p><strong>Current Challenge:</strong> Platform must support consistent call quality, reliable recording, and detailed analytics across large team making thousands of calls daily. Any infrastructure limitations directly impact revenue generation capacity.</p>
+                        <p><strong>Why This Matters:</strong> High-volume calling infrastructure enables scalable prospecting operations while providing data needed for performance optimization and coaching at scale.</p>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Enterprise Calling</h5>
+                            <ul class="capability-list">
+                                <li>Proven high-volume infrastructure with Fortune 500 track record</li>
+                                <li>Local presence dialing with automated disposition tracking</li>
+                                <li>Comprehensive conversation intelligence and AI-powered coaching</li>
+                                <li>Multi-language transcription and performance analytics</li>
+                                <li>Advanced call quality monitoring and optimization features</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Standard Features</h5>
+                            <ul class="capability-list">
+                                <li>Native dialer optimized for call-heavy sales motions</li>
+                                <li>Standard call recording and basic analytics reporting</li>
+                                <li>Disposition tracking and performance reporting</li>
+                                <li class="limitation">Less sophisticated conversation intelligence and coaching features</li>
+                                <li class="limitation">Unproven scalability with high-volume enterprise calling operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="initiative-card">
+                    <h3>5. Tuition Express Upselling Workflow</h3>
+                    <div style="margin: 15px 0;">
+                        <p><strong>Business Process:</strong> Monitor customer health indicators in Salesforce → Identify TE expansion opportunities based on usage patterns → Execute automated upselling sequences → Track attachment rates against company OKR. This systematic approach to expansion revenue requires integration between health data and engagement workflows.</p>
+                        <p><strong>Current Challenge:</strong> Manual identification of expansion opportunities limits systematic coverage of customer base. Need automated triggers based on customer health and usage data to maximize TE attachment rates.</p>
+                        <p><strong>Why This Matters:</strong> Systematic TE upselling directly supports major company OKR while improving customer retention and lifetime value through automated payment processing adoption.</p>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>Outreach's Expansion Engine</h5>
+                            <ul class="capability-list">
+                                <li>Health score monitoring with automated TE upselling triggers</li>
+                                <li>Account-based expansion tracking and opportunity progression views</li>
+                                <li>Custom sequences for product-specific upselling workflows</li>
+                                <li>Integration with product usage data for proactive expansion identification</li>
+                                <li>Reporting and analytics tied directly to company OKR metrics</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Basic Tracking</h5>
+                            <ul class="capability-list">
+                                <li>Standard Salesforce opportunity management for expansion tracking</li>
+                                <li>Basic account communication and activity logging</li>
+                                <li>Simple workflow automation within Salesforce constraints</li>
+                                <li class="limitation">Manual identification of expansion opportunities without automated triggers</li>
+                                <li class="limitation">Limited automation for complex upselling workflows and health scoring</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stakeholder Impact -->
+        <section id="stakeholders" class="section">
+            <div class="container">
+                <h2>Stakeholder Impact Analysis</h2>
+                
+                <!-- Jesse Schroffel -->
+                <div class="stakeholder-card">
+                    <h4>Jesse Schroffel - VP Revenue Operations</h4>
+                    <p class="role">Primary Decision Maker - Platform Reliability & Revenue Orchestration</p>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>How Outreach Delivers for Jesse</h5>
+                            <ul class="capability-list">
+                                <li>Enterprise automation eliminates current reliability failures immediately</li>
+                                <li>Advanced ML integration supports sophisticated propensity scoring workflows</li>
+                                <li>Unified platform enables guided selling standardization across territories</li>
+                                <li>Sophisticated reporting and analytics for data-driven decision making</li>
+                                <li>TE attachment optimization through automated health score monitoring</li>
+                                <li>Platform scalability supporting both current operations and enterprise development</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Limited Value</h5>
+                            <ul class="capability-list">
+                                <li>Salesforce-native approach simplifies data architecture</li>
+                                <li>Single platform management reduces IT complexity</li>
+                                <li>Potentially lower initial implementation cost</li>
+                                <li class="limitation">Platform capabilities constrained by Salesforce architecture limits</li>
+                                <li class="limitation">May not adequately support complex ML integration requirements</li>
+                                <li class="limitation">Limited advanced automation for multi-motion organizational needs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
+                        <strong>Jesse's Strategic Win:</strong> Outreach provides enterprise-grade reliability and advanced automation capabilities Jesse needs to transform revenue operations, while Revenue.io's constraints may recreate current limitations at organizational scale.
+                    </p>
+                </div>
+                
+                <!-- Cassie Leach -->
+                <div class="stakeholder-card">
+                    <h4>Cassie Leach - Revenue Operations Manager</h4>
+                    <p class="role">Platform Administrator - Daily Operations & Data Management</p>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>How Outreach Transforms Cassie's Role</h5>
+                            <ul class="capability-list">
+                                <li>Automated ownership propagation eliminates 8+ hours weekly manual work</li>
+                                <li>Reliable Salesforce sync with comprehensive conflict resolution</li>
+                                <li>Enterprise-grade admin controls and comprehensive monitoring</li>
+                                <li>Detailed error logging with specific remediation steps</li>
+                                <li>Advanced user management and sophisticated governance features</li>
+                                <li>Forecasting capabilities supporting unit-based business model (roadmap item)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Administrative Trade-offs</h5>
+                            <ul class="capability-list">
+                                <li>Simplified administration within Salesforce environment</li>
+                                <li>Native security model and user permissions</li>
+                                <li>Reduced technical complexity for basic operations</li>
+                                <li class="limitation">Limited advanced workflow automation capabilities</li>
+                                <li class="limitation">May not solve ownership propagation challenges effectively</li>
+                                <li class="limitation">Basic forecasting capabilities without unit-based optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
+                        <strong>Cassie's Immediate Impact:</strong> Outreach immediately eliminates her biggest time drain while providing enterprise-grade administration tools, versus Revenue.io's administrative simplicity that may perpetuate current manual work.
+                    </p>
+                </div>
+                
+                <!-- Andrew Lusche -->
+                <div class="stakeholder-card">
+                    <h4>Andrew Lusche - VP New Sales</h4>
+                    <p class="role">Sales Operations Leader - BDR/SDR Management</p>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>How Outreach Empowers Andrew</h5>
+                            <ul class="capability-list">
+                                <li>Deep sequence analytics revealing exactly what drives BDR success</li>
+                                <li>AI-powered coaching at scale without requiring manual review time</li>
+                                <li>Advanced conversation intelligence enabling effective coaching for 30+ reps</li>
+                                <li>Proven BDR platform with documented enterprise adoption success</li>
+                                <li>Real-time performance visibility and automated coaching insights</li>
+                                <li>Guided selling implementation supporting systematic rep development</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Basic Offerings</h5>
+                            <ul class="capability-list">
+                                <li>Call-heavy motion optimization and dialer functionality</li>
+                                <li>Basic flow analytics and standard reporting</li>
+                                <li>Standard dialer functionality for BDR teams</li>
+                                <li class="limitation">Newer platform with limited engagement analytics depth</li>
+                                <li class="limitation">Less mature sequence optimization than proven enterprise alternatives</li>
+                                <li class="limitation">Limited coaching capabilities for large team management</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
+                        <strong>Andrew's Coaching Success:</strong> Outreach provides sophisticated analytics and coaching tools Andrew needs to scale team effectively, while Revenue.io offers only basic functionality insufficient for complex team management.
+                    </p>
+                </div>
+                
+                <!-- Implementation Team -->
+                <div class="stakeholder-card">
+                    <h4>Implementation Team</h4>
+                    <p class="role">Customer Onboarding - Multi-Product Communication</p>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>How Outreach Supports Implementation</h5>
+                            <ul class="capability-list">
+                                <li>Custom object support enabling proper post-sale process management</li>
+                                <li>Intelligent activity attribution to cases rather than opportunities</li>
+                                <li>Unified platform providing sales context for onboarding</li>
+                                <li>Multiple cadence support for different products and implementation channels</li>
+                                <li>Booking links, templates, and call recording integrated with sales history</li>
+                                <li>Advanced workflow automation for complex onboarding processes</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Native Advantage</h5>
+                            <ul class="capability-list">
+                                <li>Native Salesforce case integration and management</li>
+                                <li>Direct case activity logging without external sync</li>
+                                <li>Simplified case management workflows within Salesforce</li>
+                                <li>Standard Salesforce security and permission models</li>
+                                <li class="limitation">Limited advanced workflow capabilities for complex implementation processes</li>
+                                <li class="limitation">May lack sophisticated sequence capabilities for multi-product onboarding</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p style="margin: 20px 0; font-weight: 600; color: var(--context);">
+                        <strong>Platform Consideration:</strong> Revenue.io offers native case management advantage, while Outreach provides more sophisticated workflow capabilities. Decision depends on implementation team's complexity requirements versus administrative simplicity preferences.
+                    </p>
+                </div>
+                
+                <!-- Account Management Team -->
+                <div class="stakeholder-card">
+                    <h4>Account Management Team</h4>
+                    <p class="role">Customer Expansion - Tuition Express Attachment</p>
+                    
+                    <div class="comparison-grid">
+                        <div class="capability-box outreach">
+                            <h5>How Outreach Drives TE Expansion</h5>
+                            <ul class="capability-list">
+                                <li>Health score monitoring with automated TE upselling triggers</li>
+                                <li>Account-based expansion views showing opportunity progression</li>
+                                <li>Custom sequences for systematic TE attachment workflows</li>
+                                <li>Integration with product usage data for proactive expansion</li>
+                                <li>Reporting directly tied to company OKR metrics and attachment rates</li>
+                                <li>Advanced analytics showing expansion performance by segment and rep</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="capability-box revenue">
+                            <h5>Revenue.io's Limited Expansion Support</h5>
+                            <ul class="capability-list">
+                                <li>Standard Salesforce opportunity management for expansion tracking</li>
+                                <li>Basic account communication and activity logging</li>
+                                <li>Simple workflow automation within platform constraints</li>
+                                <li class="limitation">Manual expansion opportunity identification without automated triggers</li>
+                                <li class="limitation">Limited automation for complex upselling workflows</li>
+                                <li class="limitation">Basic reporting without sophisticated expansion analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
+                        <strong>TE Attachment Success:</strong> Outreach enables systematic expansion through automated health monitoring and sophisticated workflows critical for major company OKR achievement, while Revenue.io requires manual processes insufficient for systematic coverage.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Analysis -->
+        <section id="teams" class="section">
+            <div class="container">
+                <h2>Team-by-Team Analysis</h2>
+                
+                <div class="team-grid">
+                    <!-- BDR Team -->
+                    <div class="team-card">
+                        <h4>BDR Team (30 reps - Cold Outbound)</h4>
+                        <p class="current-state">Current: 75+ calls daily per rep, ML-scored opportunity assignment, territory-based coverage, high-volume prospecting operations</p>
+                        <div class="comparison-content">
+                            <p><strong>Outreach:</strong> Proven high-volume calling infrastructure with Fortune 500 track record, sophisticated sequence analytics revealing performance drivers, AI-powered optimization, automated coaching insights, enterprise-grade reliability supporting scale.</p>
+                            <p><strong>Revenue.io:</strong> Call-heavy motion focus with native dialer, basic flow metrics and reporting, newer platform still building engagement analytics depth, optimization capabilities less mature than proven alternatives.</p>
+                        </div>
+                        <p class="verdict outreach-wins">Platform Fit: Outreach - Proven enterprise BDR platform vs. unproven scale</p>
+                    </div>
+                    
+                    <!-- SDR Team -->
+                    <div class="team-card">
+                        <h4>SDR Team (Inbound Response + Live Transfers)</h4>
+                        <p class="current-state">Current: Fast lead response, round-robin scheduling, critical live BDR-to-AE transfers, warm handoff processes</p>
+                        <div class="comparison-content">
+                            <p><strong>Outreach:</strong> Enterprise-grade live transfer capabilities with warm transfer and call merge, automated inbound routing, conversation intelligence continuity, advanced lead management and prioritization systems.</p>
+                            <p><strong>Revenue.io:</strong> Native dialer with transfer functionality, Salesforce-integrated lead routing, call quality focus, simplified inbound handling within platform constraints.</p>
+                        </div>
+                        <p class="verdict outreach-wins">Platform Fit: Outreach - Superior automation and intelligence capabilities</p>
+                    </div>
+                    
+                    <!-- Account Executive Team -->
+                    <div class="team-card">
+                        <h4>Account Executive Team (15-day Sales Cycle)</h4>
+                        <p class="current-state">Current: Demo delivery, deal closure, relationship management, pipeline visibility, guided selling implementation needs</p>
+                        <div class="comparison-content">
+                            <p><strong>Outreach:</strong> AI-powered deal health scoring, automated follow-up sequences, comprehensive pipeline analytics, account-based selling features for enterprise development, guided selling automation.</p>
+                            <p><strong>Revenue.io:</strong> Salesforce-native opportunity management, basic deal tracking, call-focused relationship building, standard pipeline reporting, limited guided selling capabilities.</p>
+                        </div>
+                        <p class="verdict outreach-wins">Platform Fit: Outreach - Advanced deal intelligence vs. basic functionality</p>
+                    </div>
+                    
+                    <!-- Implementation Team -->
+                    <div class="team-card">
+                        <h4>Implementation Team (Case Management)</h4>
