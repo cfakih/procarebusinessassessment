@@ -443,6 +443,44 @@
             margin: 15px 0;
         }
         
+        /* Constraints Box */
+        .constraints-box {
+            background: linear-gradient(135deg, var(--warning), #f39c12);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .constraints-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .constraints-box h3 {
+            color: var(--white);
+            font-size: 24px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .constraints-box p {
+            font-size: 16px;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+            margin: 15px 0;
+        }
+        
         /* Tables */
         .comparison-table {
             width: 100%;
@@ -611,6 +649,42 @@
             padding-right: 50px;
         }
         
+        /* Constraints specific styling */
+        .constraints-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .constraints-list li {
+            padding: 8px 0;
+            color: var(--text-medium);
+            font-size: 15px;
+            line-height: 1.6;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .constraints-list li::before {
+            content: "⚠";
+            position: absolute;
+            left: 0;
+            color: var(--warning);
+            font-weight: bold;
+        }
+        
+        .constraints-category {
+            background: var(--gray-lightest);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .constraints-category h4 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
         /* Mobile Responsive */
         @media (max-width: 1024px) {
             .sidebar-nav {
@@ -669,6 +743,7 @@
             <li><a href="#teams" class="nav-link"><i>👥</i><span>Team Analysis</span></a></li>
             <li><a href="#integrations" class="nav-link"><i>🔗</i><span>Technical Analysis</span></a></li>
             <li><a href="#solution-mapping" class="nav-link"><i>🗺️</i><span>Solution Mapping</span></a></li>
+            <li><a href="#constraints" class="nav-link"><i>⚠️</i><span>Revenue.io Constraints</span></a></li>
             <li><a href="#assessment" class="nav-link"><i>✅</i><span>Recommendation</span></a></li>
         </ul>
     </nav>
@@ -718,13 +793,13 @@
                 <div class="outreach-advantage-box">
                     <h3>Enterprise Platform for Complex Sales Operations</h3>
                     <p>
-                        <strong>Proven Reliability:</strong> Outreach's enterprise-grade platform provides 99.9% automation reliability that Procare needs to eliminate current SalesLoft failures. Fortune 500 customers including Snowflake, DocuSign, and Cisco validate scalability for Procare's 170+ user deployment.
+                        <strong>Proven Reliability:</strong> Outreach's enterprise-grade platform provides 99.9% uptime SLA that Procare needs to eliminate current SalesLoft failures. Fortune 500 customers including Snowflake, DocuSign, and Cisco validate scalability for Procare's 170+ user deployment.
                     </p>
                     <p>
                         <strong>Advanced Automation:</strong> Sophisticated trigger system with conditional logic eliminates automation failures plaguing current operations. Automated ownership propagation saves Kassie 8+ hours weekly on manual sequence reassignments.
                     </p>
                     <p>
-                        <strong>Salesforce Partnership:</strong> Salesforce's $200 million strategic investment validates Outreach's integration architecture superiority over native alternatives, ensuring ongoing compatibility and innovation.
+                        <strong>Salesforce Partnership:</strong> Salesforce's $200 million strategic investment validates Outreach's integration architecture and ongoing innovation roadmap.
                     </p>
                 </div>
             </div>
@@ -741,7 +816,7 @@
                     <div style="margin: 20px 0;">
                         <p><strong>Current State:</strong> Performance disparity across territories - only one director (Jeff) achieves systematic weekly forecasting with structured commit tracking, while other four directors operate reactively without standardized processes. Jeff meets with his 3-4 reps every Monday to establish weekly commits and tracks performance at granular daily level.</p>
                         <p><strong>Business Impact:</strong> Need to replicate high-performance sales management across all five territories to improve forecast accuracy and rep productivity. Enable all directors to achieve Jeff's level of forecast accuracy within 10% margin of error.</p>
-                        <p><strong>How Outreach Solves:</strong> Outreach's guided selling capabilities can systematize Jeff's proven approach across all territories through automated task prioritization, weekly forecasting workflows, and manager dashboards. The platform's AI-powered recommendations and structured playbooks eliminate the manual spreadsheet management currently required for success.</p>
+                        <p><strong>How Outreach Solves:</strong> Outreach's guided selling capabilities can systematize Jeff's proven approach across all territories through configurable task prioritization, weekly forecasting workflows, and manager dashboards. The platform's AI-powered recommendations and structured playbooks eliminate the manual spreadsheet management currently required for success.</p>
                     </div>
                     
                     <div class="comparison-grid">
@@ -751,26 +826,26 @@
                                 <li>AI-powered task prioritization with ML propensity score integration</li>
                                 <li>Weekly forecasting workflows with automated commit tracking</li>
                                 <li>Manager dashboards showing performance against weekly goals</li>
-                                <li>Smart sequences adapting to engagement patterns</li>
+                                <li>Advanced sequences with sophisticated branching via triggers</li>
                                 <li>Automated reminders and coaching triggers for consistent management</li>
-                                <li>Custom playbooks replicating high-performer methodologies</li>
+                                <li>Content templates and playbooks to replicate high-performer methodologies</li>
                             </ul>
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Basic Approach</h5>
+                            <h5>Revenue.io's Guided Selling</h5>
                             <ul class="capability-list">
+                                <li>AI-powered sales engagement solution with real-time guidance</li>
+                                <li>Automated multichannel cadences with event-based triggers</li>
+                                <li>Lead prioritization based on fit, last contact, and engagement criteria</li>
                                 <li>Salesforce workflow-based task management</li>
-                                <li>Basic prioritization within platform constraints</li>
                                 <li>Standard Salesforce reporting capabilities</li>
-                                <li class="limitation">Limited AI-driven guidance and optimization</li>
-                                <li class="limitation">Constrained by Salesforce governor limits for complex workflows</li>
-                                <li class="limitation">Cannot replicate sophisticated manual processes through automation</li>
+                                <li class="limitation">Basic automation capabilities within Salesforce constraints</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <div class="winner-badge outreach">Outreach Advantage: AI-driven systematic approach vs. basic workflows</div>
+                    <div class="winner-badge outreach">Outreach Advantage: Advanced workflow automation and specialized forecasting tools vs. Salesforce-native approach</div>
                 </div>
                 
                 <!-- Enterprise Sales Motion -->
@@ -796,19 +871,18 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Limited Enterprise Features</h5>
+                            <h5>Revenue.io's Enterprise Features</h5>
                             <ul class="capability-list">
                                 <li>Standard Salesforce account management capabilities</li>
                                 <li>Basic opportunity planning functionality</li>
                                 <li>Call-focused relationship building approach</li>
-                                <li class="limitation">Limited account-based selling features beyond Salesforce standard</li>
-                                <li class="limitation">Primarily designed for call-heavy rather than complex enterprise motions</li>
-                                <li class="limitation">May require additional tools for comprehensive enterprise sales support</li>
+                                <li>Native integration with Salesforce security and permission models</li>
+                                <li class="limitation">Leverages Salesforce's standard objects for account and opportunity management</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <div class="winner-badge outreach">Outreach Advantage: Comprehensive enterprise features vs. basic functionality</div>
+                    <div class="winner-badge outreach">Outreach Advantage: Purpose-built enterprise selling tools vs. reliance on Salesforce standard functionality</div>
                 </div>
                 
                 <!-- Tuition Express Attachment -->
@@ -818,14 +892,14 @@
                         <p><strong>Business Context:</strong> Tuition Express is Procare's automated tuition payment processing solution that streamlines payment collection for childcare centers. Increasing TE attachment rates within their existing customer base represents a major company OKR and significant revenue driver, as it improves customer retention while generating additional revenue.</p>
                         <p><strong>Strategic Leadership:</strong> Katie McSparron (VP of Revenue and Portfolio Growth) oversees Account Growth and Utilization teams responsible for executing TE attachment strategy across their 60,000+ childcare center customer base. Her background includes merchant growth and retention at Visa, making her uniquely qualified to drive this expansion initiative.</p>
                         <p><strong>Current Challenge:</strong> Need systematic approach to identify expansion opportunities and execute upselling processes across 60,000+ childcare centers. Account management team currently uses manual processes to monitor customer health and identify TE expansion opportunities.</p>
-                        <p><strong>How Outreach Solves:</strong> Outreach's expansion platform automates the entire TE attachment workflow through health score monitoring, automated triggers based on customer lifecycle stages, and account-based views that surface expansion opportunities. Integration with product usage data enables proactive rather than reactive upselling.</p>
+                        <p><strong>How Outreach Solves:</strong> Outreach's expansion platform automates the entire TE attachment workflow through configurable triggers based on field changes, automated sequences based on customer lifecycle stages, and account-based views that surface expansion opportunities. Integration with product usage data enables proactive rather than reactive upselling.</p>
                     </div>
                     
                     <div class="comparison-grid">
                         <div class="capability-box outreach">
                             <h5>Outreach's Expansion Platform</h5>
                             <ul class="capability-list">
-                                <li>Health score monitoring with automated TE upselling triggers</li>
+                                <li>Configurable triggers for upselling based on field changes and custom objects</li>
                                 <li>Account-based expansion views showing opportunity progression</li>
                                 <li>Custom object support for product usage tracking integration</li>
                                 <li>Automated sequences based on customer lifecycle stage and health indicators</li>
@@ -835,19 +909,18 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Basic Upselling</h5>
+                            <h5>Revenue.io's Customer Success Features</h5>
                             <ul class="capability-list">
-                                <li>Salesforce-based opportunity management for tracking expansion</li>
-                                <li>Standard account tracking and communication logging</li>
-                                <li>Basic workflow automation within Salesforce constraints</li>
-                                <li class="limitation">Limited expansion-specific features beyond standard CRM functionality</li>
-                                <li class="limitation">Manual identification of upselling opportunities without automated triggers</li>
-                                <li class="limitation">Cannot integrate sophisticated health scoring for proactive expansion</li>
+                                <li>AI analysis of product usage and customer interactions for expansion signals</li>
+                                <li>Customer success insights and renewal intelligence</li>
+                                <li>Automated upsell signal identification for engaged customers</li>
+                                <li>Standard Salesforce opportunity management for tracking expansion</li>
+                                <li class="limitation">Basic workflow automation within Salesforce constraints</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <div class="winner-badge outreach">Outreach Advantage: Purpose-built expansion capabilities vs. basic account management</div>
+                    <div class="winner-badge context">Different Approaches: Outreach offers configurable automation, Revenue.io provides AI-driven signal identification</div>
                 </div>
                 
                 <!-- ML Propensity Scoring Integration -->
@@ -866,26 +939,25 @@
                                 <li>Enterprise APIs connecting directly to external ML systems and data warehouses</li>
                                 <li>Real-time score updates triggering automated workflow changes</li>
                                 <li>Sophisticated conditional logic supporting complex business rules</li>
-                                <li>Advanced trigger system handling high-volume score changes without throttling</li>
+                                <li>Advanced trigger system handling high-volume score changes</li>
                                 <li>Native integration with data platforms like Snowflake for advanced analytics</li>
                                 <li>Automated task prioritization based on dynamic propensity score changes</li>
                             </ul>
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Limited Integration</h5>
+                            <h5>Revenue.io's Score Integration</h5>
                             <ul class="capability-list">
                                 <li>Score updates via Salesforce field changes and basic workflows</li>
                                 <li>Direct integration within Salesforce ecosystem</li>
                                 <li>Standard Salesforce automation capabilities for score processing</li>
-                                <li class="limitation">Governor limits may impact high-volume ML score processing</li>
-                                <li class="limitation">Limited to systems that can integrate directly with Salesforce</li>
-                                <li class="limitation">Cannot support complex real-time integrations with external ML platforms</li>
+                                <li>Native integration advantages with Salesforce data model</li>
+                                <li class="limitation">Simplified data architecture within single platform</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <div class="winner-badge outreach">Outreach Advantage: Unlimited ML integration vs. Salesforce constraints</div>
+                    <div class="winner-badge outreach">Outreach Advantage: External system integration flexibility vs. Salesforce-centric approach</div>
                 </div>
                 
                 <!-- Multi-Motion Sales Support -->
@@ -902,7 +974,7 @@
                             <h5>Outreach's Multi-Motion Excellence</h5>
                             <ul class="capability-list">
                                 <li>Purpose-built for complex organizations with diverse sales functions</li>
-                                <li>Advanced sequences with sophisticated branching and conditional logic</li>
+                                <li>Advanced sequences with sophisticated branching and conditional logic via triggers</li>
                                 <li>Role-based workflows supporting all sales functions simultaneously</li>
                                 <li>Account-based features for AE relationship management and enterprise deals</li>
                                 <li>Custom object support enabling case management alongside opportunities</li>
@@ -911,19 +983,18 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Call-Heavy Focus</h5>
+                            <h5>Revenue.io's Multi-Team Support</h5>
                             <ul class="capability-list">
-                                <li>Optimized for call-heavy sales motions (historical RingDNA focus)</li>
-                                <li>Basic sequence capabilities within Salesforce constraints</li>
-                                <li>Native dialer functionality for calling-focused teams</li>
-                                <li class="limitation">Limited branching and conditional logic for complex workflows</li>
-                                <li class="limitation">May not adequately support diverse BDR/SDR/AE/Implementation workflow needs</li>
-                                <li class="limitation">Primarily designed for single motion rather than multi-motion complexity</li>
+                                <li>Salesforce-native approach supports multiple teams within CRM</li>
+                                <li>Customer Success features for post-sale teams</li>
+                                <li>Revenue AI for CSM insights and renewal predictions</li>
+                                <li>Standard call transfer and conference capabilities</li>
+                                <li class="limitation">Unified data model within Salesforce for all teams</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <div class="winner-badge outreach">Outreach Advantage: Built for complexity vs. single-motion optimization</div>
+                    <div class="winner-badge outreach">Outreach Advantage: Specialized tools for each motion vs. unified CRM-based approach</div>
                 </div>
             </div>
         </section>
@@ -955,14 +1026,15 @@
                         <div class="capability-box revenue">
                             <h5>Revenue.io's Transfer Features</h5>
                             <ul class="capability-list">
-                                <li>Native dialer with call transfer functionality</li>
+                                <li>Native dialer with warm and cold transfer functionality</li>
+                                <li>Call merge capabilities to bring prospect back after consultation</li>
+                                <li>Conference functionality to connect all parties</li>
                                 <li>Standard call quality and transfer capabilities</li>
                                 <li>Salesforce-integrated call logging for transferred calls</li>
-                                <li class="limitation">Less sophisticated conversation intelligence during transfers</li>
-                                <li class="limitation">Limited advanced analytics for transfer performance optimization</li>
                             </ul>
                         </div>
                     </div>
+                    <div class="winner-badge context">Assessment: Both platforms support live call transfers effectively</div>
                 </div>
                 
                 <div class="initiative-card">
@@ -985,16 +1057,16 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Native Limitations</h5>
+                            <h5>Revenue.io's Native Integration</h5>
                             <ul class="capability-list">
                                 <li>Direct logging to Salesforce objects without external sync complexity</li>
                                 <li>Native integration with Salesforce security and permission models</li>
                                 <li>Standard Salesforce activity management capabilities</li>
-                                <li class="limitation">Customer reports: "limitations with record access requirements"</li>
-                                <li class="limitation">May hit Salesforce data limits with high-volume activity logging</li>
+                                <li>Simplified troubleshooting within single platform</li>
                             </ul>
                         </div>
                     </div>
+                    <div class="winner-badge outreach">Outreach Advantage: Configurable routing logic vs. native simplicity</div>
                 </div>
                 
                 <div class="initiative-card">
@@ -1017,16 +1089,16 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Manual Dependency</h5>
+                            <h5>Revenue.io's Ownership Management</h5>
                             <ul class="capability-list">
                                 <li>Leverages Salesforce ownership and territory management systems</li>
                                 <li>Native integration with standard Salesforce assignment rules</li>
                                 <li>Basic Salesforce automation capabilities for ownership changes</li>
-                                <li class="limitation">Limited automation beyond basic Salesforce workflow capabilities</li>
-                                <li class="limitation">Likely still requires manual sequence reassignment work</li>
+                                <li>Simplified administration within Salesforce environment</li>
                             </ul>
                         </div>
                     </div>
+                    <div class="winner-badge outreach">Outreach Advantage: Automated sequence transfer vs. manual reassignment requirements</div>
                 </div>
                 
                 <div class="initiative-card">
@@ -1049,16 +1121,17 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Standard Features</h5>
+                            <h5>Revenue.io's Calling Platform</h5>
                             <ul class="capability-list">
-                                <li>Native dialer optimized for call-heavy sales motions</li>
-                                <li>Standard call recording and basic analytics reporting</li>
+                                <li>Native dialer optimized for call-heavy sales motions with RingDNA heritage</li>
+                                <li>Standard call recording and conversation analytics reporting</li>
                                 <li>Disposition tracking and performance reporting</li>
-                                <li class="limitation">Less sophisticated conversation intelligence and coaching features</li>
-                                <li class="limitation">Unproven scalability with high-volume enterprise calling operations</li>
+                                <li>Real-time "Moments" guidance during calls</li>
+                                <li>AI conversation scorecards for performance evaluation</li>
                             </ul>
                         </div>
                     </div>
+                    <div class="winner-badge context">Assessment: Both platforms provide robust high-volume calling capabilities</div>
                 </div>
                 
                 <div class="initiative-card">
@@ -1072,7 +1145,7 @@
                         <div class="capability-box outreach">
                             <h5>Outreach's Expansion Engine</h5>
                             <ul class="capability-list">
-                                <li>Health score monitoring with automated TE upselling triggers</li>
+                                <li>Configurable triggers for upselling based on field changes and health indicators</li>
                                 <li>Account-based expansion tracking and opportunity progression views</li>
                                 <li>Custom sequences for product-specific upselling workflows</li>
                                 <li>Integration with product usage data for proactive expansion identification</li>
@@ -1081,16 +1154,17 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Basic Tracking</h5>
+                            <h5>Revenue.io's Customer Success Intelligence</h5>
                             <ul class="capability-list">
+                                <li>AI analysis of product usage patterns and customer interactions</li>
+                                <li>Automated identification of expansion opportunities and churn risks</li>
+                                <li>CSM alerts for upsell potential and renewal insights</li>
                                 <li>Standard Salesforce opportunity management for expansion tracking</li>
-                                <li>Basic account communication and activity logging</li>
-                                <li>Simple workflow automation within Salesforce constraints</li>
-                                <li class="limitation">Manual identification of expansion opportunities without automated triggers</li>
-                                <li class="limitation">Limited automation for complex upselling workflows and health scoring</li>
+                                <li>Native integration with customer data in Salesforce</li>
                             </ul>
                         </div>
                     </div>
+                    <div class="winner-badge context">Assessment: Different approaches - Outreach offers configurable automation, Revenue.io provides AI-driven insights</div>
                 </div>
             </div>
         </section>
@@ -1113,25 +1187,24 @@
                                 <li>Advanced ML integration supports sophisticated propensity scoring workflows</li>
                                 <li>Unified platform enables guided selling standardization across territories</li>
                                 <li>Sophisticated reporting and analytics for data-driven decision making</li>
-                                <li>TE attachment optimization through automated health score monitoring</li>
+                                <li>TE attachment optimization through configurable automation</li>
                                 <li>Platform scalability supporting both current operations and enterprise development</li>
                             </ul>
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Limited Value</h5>
+                            <h5>Revenue.io's Value for Jesse</h5>
                             <ul class="capability-list">
                                 <li>Salesforce-native approach simplifies data architecture</li>
                                 <li>Single platform management reduces IT complexity</li>
-                                <li>Potentially lower initial implementation cost</li>
-                                <li class="limitation">Platform capabilities constrained by Salesforce architecture limits</li>
-                                <li class="limitation">May not adequately support complex ML integration requirements</li>
-                                <li class="limitation">Limited advanced automation for multi-motion organizational needs</li>
+                                <li>Real-time customer success insights for expansion opportunities</li>
+                                <li>Native security model and user permissions</li>
+                                <li>Simplified troubleshooting within single platform</li>
                             </ul>
                         </div>
                     </div>
                     <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
-                        <strong>Jesse's Strategic Win:</strong> Outreach provides enterprise-grade reliability and advanced automation capabilities Jesse needs to transform revenue operations, while Revenue.io's constraints may recreate current limitations at organizational scale.
+                        <strong>Jesse's Strategic Decision:</strong> Outreach provides advanced automation capabilities and external system integration flexibility, while Revenue.io offers administrative simplicity within Salesforce ecosystem.
                     </p>
                 </div>
                 
@@ -1144,7 +1217,7 @@
                         <div class="capability-box outreach">
                             <h5>How Outreach Drives Katie's Success</h5>
                             <ul class="capability-list">
-                                <li>Health score monitoring with automated TE upselling triggers for systematic expansion</li>
+                                <li>Configurable triggers for TE upselling based on customer lifecycle and health indicators</li>
                                 <li>Account-based expansion views enabling data-driven growth strategies</li>
                                 <li>Custom object support for product usage tracking and customer success metrics</li>
                                 <li>Automated sequences optimized for customer lifecycle and expansion opportunities</li>
@@ -1154,19 +1227,18 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Basic Account Management</h5>
+                            <h5>Revenue.io's Customer Success Value</h5>
                             <ul class="capability-list">
-                                <li>Standard Salesforce opportunity management for expansion tracking</li>
-                                <li>Basic account communication and activity logging</li>
-                                <li>Simple workflow automation within platform constraints</li>
-                                <li class="limitation">Manual expansion opportunity identification without automated triggers</li>
-                                <li class="limitation">Limited automation for complex upselling workflows and health scoring</li>
-                                <li class="limitation">Basic reporting without sophisticated expansion analytics</li>
+                                <li>AI-powered identification of expansion opportunities and engagement patterns</li>
+                                <li>Automated customer success insights and renewal intelligence</li>
+                                <li>Real-time analysis of customer interactions for upsell signals</li>
+                                <li>Native integration with Salesforce customer data</li>
+                                <li>Simplified customer success workflow within CRM</li>
                             </ul>
                         </div>
                     </div>
                     <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
-                        <strong>Katie's Revenue Growth:</strong> Outreach enables systematic TE attachment strategy through automated health monitoring and sophisticated expansion workflows critical for major company OKR achievement.
+                        <strong>Katie's Revenue Growth:</strong> Both platforms support TE attachment strategy - Outreach through configurable automation, Revenue.io through AI-driven insights.
                     </p>
                 </div>
                 
@@ -1184,24 +1256,22 @@
                                 <li>Enterprise-grade admin controls and comprehensive monitoring</li>
                                 <li>Detailed error logging with specific remediation steps</li>
                                 <li>Advanced user management and sophisticated governance features</li>
-                                <li>Unit-based forecasting capabilities supporting business model (roadmap item)</li>
                             </ul>
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Administrative Trade-offs</h5>
+                            <h5>Revenue.io's Administrative Benefits</h5>
                             <ul class="capability-list">
                                 <li>Simplified administration within Salesforce environment</li>
                                 <li>Native security model and user permissions</li>
                                 <li>Reduced technical complexity for basic operations</li>
-                                <li class="limitation">Limited advanced workflow automation capabilities</li>
-                                <li class="limitation">May not solve ownership propagation challenges effectively</li>
-                                <li class="limitation">Basic forecasting capabilities without unit-based optimization</li>
+                                <li>Single platform troubleshooting and support</li>
+                                <li>Direct integration eliminating sync complexity</li>
                             </ul>
                         </div>
                     </div>
                     <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
-                        <strong>Kassie's Immediate Impact:</strong> Outreach immediately eliminates her biggest time drain while providing enterprise-grade administration tools, versus Revenue.io's administrative simplicity that may perpetuate current manual work.
+                        <strong>Kassie's Immediate Impact:</strong> Outreach eliminates manual ownership propagation work through automation, while Revenue.io provides administrative simplicity within familiar Salesforce environment.
                     </p>
                 </div>
                 
@@ -1215,7 +1285,7 @@
                             <h5>How Outreach Empowers Andrew</h5>
                             <ul class="capability-list">
                                 <li>Deep sequence analytics revealing exactly what drives BDR success</li>
-                                <li>AI-powered coaching at scale without requiring manual review time</li>
+                                <li>AI-powered coaching insights and conversation intelligence</li>
                                 <li>Advanced conversation intelligence enabling effective coaching for 30+ reps</li>
                                 <li>Proven BDR platform with documented enterprise adoption success</li>
                                 <li>Real-time performance visibility and automated coaching insights</li>
@@ -1224,19 +1294,18 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Basic Offerings</h5>
+                            <h5>Revenue.io's BDR Support</h5>
                             <ul class="capability-list">
-                                <li>Call-heavy motion optimization and dialer functionality</li>
-                                <li>Basic flow analytics and standard reporting</li>
-                                <li>Standard dialer functionality for BDR teams</li>
-                                <li class="limitation">Newer platform with limited engagement analytics depth</li>
-                                <li class="limitation">Less mature sequence optimization than proven enterprise alternatives</li>
-                                <li class="limitation">Limited coaching capabilities for large team management</li>
+                                <li>Call-heavy motion optimization with RingDNA heritage</li>
+                                <li>Real-time "Moments" guidance during calls</li>
+                                <li>AI conversation scorecards for performance evaluation</li>
+                                <li>Native Salesforce integration for familiar workflow</li>
+                                <li>Standard dialer functionality optimized for high-volume calling</li>
                             </ul>
                         </div>
                     </div>
                     <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
-                        <strong>Andrew's Coaching Success:</strong> Outreach provides sophisticated analytics and coaching tools Andrew needs to scale team effectively, while Revenue.io offers only basic functionality insufficient for complex team management.
+                        <strong>Andrew's Coaching Success:</strong> Outreach provides comprehensive analytics and coaching tools, while Revenue.io offers call-focused guidance and performance scoring.
                     </p>
                 </div>
                 
@@ -1259,19 +1328,17 @@
                         </div>
                         
                         <div class="capability-box revenue">
-                            <h5>Revenue.io's Enterprise Limitations</h5>
+                            <h5>Revenue.io's Enterprise Support</h5>
                             <ul class="capability-list">
                                 <li>Standard Salesforce account management for enterprise deals</li>
-                                <li>Basic opportunity planning and relationship tracking</li>
+                                <li>Native integration with Salesforce opportunity and account objects</li>
                                 <li>Call-focused approach to enterprise relationship building</li>
-                                <li class="limitation">Limited account-based selling features beyond Salesforce standard</li>
-                                <li class="limitation">Primarily designed for call-heavy rather than complex enterprise motions</li>
-                                <li class="limitation">May require additional tools for comprehensive enterprise sales support</li>
+                                <li>Salesforce-native compliance and security features</li>
                             </ul>
                         </div>
                     </div>
                     <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
-                        <strong>Chelsea's Enterprise Vision:</strong> Outreach provides comprehensive enterprise selling capabilities needed for future state development, while Revenue.io's limitations may require additional tools and complexity.
+                        <strong>Chelsea's Enterprise Vision:</strong> Outreach provides purpose-built enterprise selling capabilities, while Revenue.io leverages Salesforce's standard enterprise functionality.
                     </p>
                 </div>
             </div>
@@ -1289,9 +1356,31 @@
                         <p class="current-state">Current: 75+ calls daily per rep, ML-scored opportunity assignment, territory-based coverage, high-volume prospecting operations</p>
                         <div class="comparison-content">
                             <p><strong>Outreach:</strong> Proven high-volume calling infrastructure with Fortune 500 track record, sophisticated sequence analytics revealing performance drivers, AI-powered optimization, automated coaching insights, enterprise-grade reliability supporting scale.</p>
-                            <p><strong>Revenue.io:</strong> Salesforce-native opportunity management, basic deal tracking, call-focused relationship building, standard pipeline reporting, limited guided selling capabilities.</p>
+                            <p><strong>Revenue.io:</strong> Native dialer optimized for call-heavy sales motions with RingDNA heritage, real-time "Moments" guidance during calls, AI conversation scorecards for performance evaluation, standard call recording and analytics.</p>
                         </div>
-                        <p class="verdict outreach-wins">Platform Fit: Outreach - Advanced deal intelligence vs. basic functionality</p>
+                        <p class="verdict outreach-wins">Platform Fit: Outreach - Advanced sequence analytics vs. call-focused optimization</p>
+                    </div>
+                    
+                    <!-- SDR Team -->
+                    <div class="team-card">
+                        <h4>SDR Team (Warm Inbound Response)</h4>
+                        <p class="current-state">Current: Inbound lead response, qualification workflows, meeting booking and handoff processes, warm prospect engagement</p>
+                        <div class="comparison-content">
+                            <p><strong>Outreach:</strong> Advanced lead routing and prioritization, sophisticated sequence automation for inbound follow-up, Smart Account Plans for qualification, AI-powered task management and next best actions.</p>
+                            <p><strong>Revenue.io:</strong> AI-powered lead prioritization based on fit and engagement, automated multichannel cadences with event-based triggers, native Salesforce workflow integration for lead management.</p>
+                        </div>
+                        <p class="verdict context-dependent">Platform Fit: Context-Dependent - Both platforms effectively support inbound lead management</p>
+                    </div>
+                    
+                    <!-- AE Team -->
+                    <div class="team-card">
+                        <h4>AE Team (Relationship Management & Demo Delivery)</h4>
+                        <p class="current-state">Current: Demo delivery, relationship building, opportunity management, deal progression through 15-day sales cycles</p>
+                        <div class="comparison-content">
+                            <p><strong>Outreach:</strong> Smart Account Plans with multi-threading visualization, Success Plans for buyer alignment, advanced deal health scoring, comprehensive conversation intelligence for deal insights, unified account history views.</p>
+                            <p><strong>Revenue.io:</strong> Standard Salesforce opportunity management, call-focused relationship building, basic account planning functionality, native integration with Salesforce security model.</p>
+                        </div>
+                        <p class="verdict outreach-wins">Platform Fit: Outreach - Comprehensive deal management vs. basic functionality</p>
                     </div>
                     
                     <!-- Implementation Team -->
@@ -1310,10 +1399,10 @@
                         <h4>Account Management Team (Customer Expansion)</h4>
                         <p class="current-state">Current: TE upselling workflows, existing customer relationships, expansion opportunity identification, company OKR execution</p>
                         <div class="comparison-content">
-                            <p><strong>Outreach:</strong> Health score monitoring with automated triggers, account-based expansion views, systematic upselling workflows, integration with product usage data, advanced expansion analytics.</p>
-                            <p><strong>Revenue.io:</strong> Standard account management within Salesforce, basic expansion tracking, simple communication workflows, limited automation for complex upselling processes.</p>
+                            <p><strong>Outreach:</strong> Configurable triggers for expansion based on health indicators, account-based expansion views, systematic upselling workflows, integration with product usage data, advanced expansion analytics.</p>
+                            <p><strong>Revenue.io:</strong> AI-powered customer success insights, automated expansion opportunity identification, renewal intelligence, standard account management within Salesforce, simplified customer success workflow.</p>
                         </div>
-                        <p class="verdict outreach-wins">Platform Fit: Outreach - Purpose-built expansion capabilities vs. basic account management</p>
+                        <p class="verdict context-dependent">Platform Fit: Context-Dependent - Different approaches to expansion management</p>
                     </div>
                     
                     <!-- Enterprise Sales Team -->
@@ -1321,10 +1410,10 @@
                         <h4>Enterprise Sales Team (Future State)</h4>
                         <p class="current-state">Future: Longer sales cycles, team-based selling, multi-threading, complex deal coordination, account-based approach</p>
                         <div class="comparison-content">
-                            <p><strong>Outreach:</strong> Smart Account Plans with multi-threading visualization, Success Plans for buyer alignment, sophisticated deal management, proven enterprise motion support.</p>
-                            <p><strong>Revenue.io:</strong> Basic Salesforce account planning, standard opportunity management, call-focused enterprise approach, limited advanced enterprise selling features.</p>
+                            <p><strong>Outreach:</strong> Smart Account Plans with multi-threading visualization, Success Plans for buyer alignment, sophisticated deal management, proven enterprise motion support, advanced workflow automation.</p>
+                            <p><strong>Revenue.io:</strong> Standard Salesforce account and opportunity management, native compliance and security features, call-focused enterprise approach, basic Salesforce account planning.</p>
                         </div>
-                        <p class="verdict outreach-wins">Platform Fit: Outreach - Comprehensive enterprise capabilities vs. basic functionality</p>
+                        <p class="verdict outreach-wins">Platform Fit: Outreach - Purpose-built enterprise capabilities vs. standard functionality</p>
                     </div>
                 </div>
             </div>
@@ -1412,7 +1501,7 @@
                     </div>
                     
                     <p style="margin: 20px 0; font-weight: 600; color: var(--primary);">
-                        <strong>Technical Recommendation:</strong> While Revenue.io offers administrative simplicity, Outreach's proven enterprise architecture and unlimited integration capabilities better support Procare's complex automation needs and future growth requirements.
+                        <strong>Technical Assessment:</strong> Outreach provides integration flexibility and advanced automation, while Revenue.io offers native simplicity and reduced complexity.
                     </p>
                 </div>
             </div>
@@ -1427,9 +1516,9 @@
                     <div class="solution-number">1</div>
                     <h4>The Automation Failure Crisis</h4>
                     <p><strong>Pain Point:</strong> Current SalesLoft automation failures forcing manual CSV uploads and data loads, consuming significant operational resources and threatening revenue operations stability.</p>
-                    <p><strong>Outreach Solution:</strong> Enterprise-grade automation engine with 99.9% reliability, advanced trigger system with conditional logic, and real-time sync monitoring eliminates current failures immediately.</p>
-                    <p><strong>Revenue.io Alternative:</strong> Native Salesforce automation may be more reliable than current SalesLoft, but limited by platform governor limits for complex workflows.</p>
-                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach provides proven automation reliability needed for immediate crisis resolution.</span></p>
+                    <p><strong>Outreach Solution:</strong> Enterprise-grade automation engine with 99.9% uptime SLA, advanced trigger system with conditional logic, and real-time sync monitoring eliminates current failures immediately.</p>
+                    <p><strong>Revenue.io Alternative:</strong> Native Salesforce automation eliminates external sync issues, but automation capabilities are constrained by Salesforce platform limits.</p>
+                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach provides proven automation reliability for immediate crisis resolution.</span></p>
                 </div>
                 
                 <div class="solution-card">
@@ -1437,17 +1526,17 @@
                     <h4>The Guided Selling Implementation Gap</h4>
                     <p><strong>Pain Point:</strong> Performance disparity across territories - only Jeff achieves systematic weekly forecasting while other directors lack structured processes, limiting scalable sales management.</p>
                     <p><strong>Outreach Solution:</strong> AI-powered task prioritization with ML integration, automated weekly forecasting workflows, and manager dashboards replicate high-performer success across all territories.</p>
-                    <p><strong>Revenue.io Alternative:</strong> Basic Salesforce workflows and task management without sophisticated AI-driven guidance and optimization.</p>
-                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach's advanced guided selling capabilities essential for systematic performance improvement.</span></p>
+                    <p><strong>Revenue.io Alternative:</strong> AI-powered guided selling with real-time guidance and automated cadences, leveraging Salesforce workflows for task management.</p>
+                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Both platforms address guided selling - Outreach with specialized forecasting tools, Revenue.io with AI-driven guidance.</span></p>
                 </div>
                 
                 <div class="solution-card">
                     <div class="solution-number">3</div>
                     <h4>The Tuition Express Attachment Challenge</h4>
                     <p><strong>Pain Point:</strong> Major company OKR requires systematic TE attachment strategy across 60,000+ customers, but current manual processes limit scalable expansion execution under Katie's leadership.</p>
-                    <p><strong>Outreach Solution:</strong> Health score monitoring with automated triggers, account-based expansion views, and sophisticated upselling workflows enable systematic coverage under Katie's leadership.</p>
-                    <p><strong>Revenue.io Alternative:</strong> Basic Salesforce opportunity management without automated expansion triggers or sophisticated health scoring.</p>
-                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach's purpose-built expansion capabilities critical for company OKR achievement.</span></p>
+                    <p><strong>Outreach Solution:</strong> Configurable triggers for upselling, account-based expansion views, and sophisticated workflow automation enable systematic coverage under Katie's leadership.</p>
+                    <p><strong>Revenue.io Alternative:</strong> AI-powered customer success insights automatically identify expansion opportunities and provide real-time engagement guidance.</p>
+                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Different approaches - Outreach offers configurable automation, Revenue.io provides AI-driven opportunity identification.</span></p>
                 </div>
                 
                 <div class="solution-card">
@@ -1455,8 +1544,8 @@
                     <h4>The Ownership Propagation Nightmare</h4>
                     <p><strong>Pain Point:</strong> Kassie spends 8+ hours weekly manually reassigning sequences when ownership changes, creating administrative burden and potential for lost prospects.</p>
                     <p><strong>Outreach Solution:</strong> Automated ownership propagation triggered by Salesforce changes, seamlessly transferring sequences, tasks, and activity history while maintaining prospect continuity.</p>
-                    <p><strong>Revenue.io Alternative:</strong> Native Salesforce ownership management with basic automation capabilities, likely still requiring manual sequence work.</p>
-                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach immediately eliminates Kassie's biggest time drain through advanced automation.</span></p>
+                    <p><strong>Revenue.io Alternative:</strong> Native Salesforce ownership management with basic automation capabilities, likely still requiring manual sequence management.</p>
+                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach eliminates manual work through automated ownership propagation.</span></p>
                 </div>
                 
                 <div class="solution-card">
@@ -1464,8 +1553,8 @@
                     <h4>The Multi-Motion Complexity Challenge</h4>
                     <p><strong>Pain Point:</strong> Supporting diverse teams (BDR, SDR, AE, Implementation, Account Management) with different workflows, reporting needs, and success metrics within unified platform.</p>
                     <p><strong>Outreach Solution:</strong> Purpose-built multi-motion architecture with role-based workflows, advanced sequences with conditional logic, and unified administration while maintaining specialized functionality.</p>
-                    <p><strong>Revenue.io Alternative:</strong> Call-heavy focus with basic sequence capabilities may not adequately support diverse workflow requirements across all teams.</p>
-                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach's multi-motion excellence vs. Revenue.io's single-motion optimization.</span></p>
+                    <p><strong>Revenue.io Alternative:</strong> Salesforce-native approach supports multiple teams within CRM, with customer success features for post-sale teams and unified data model.</p>
+                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach provides specialized tools for each motion, Revenue.io offers unified CRM-based approach.</span></p>
                 </div>
                 
                 <div class="solution-card">
@@ -1473,8 +1562,77 @@
                     <h4>The Enterprise Motion Development Need</h4>
                     <p><strong>Pain Point:</strong> Chelsea requires platform capable of supporting future enterprise sales motion with longer cycles, team-based selling, and account-based approach alongside current high-velocity operations.</p>
                     <p><strong>Outreach Solution:</strong> Smart Account Plans, Success Plans, and comprehensive enterprise selling capabilities that scale seamlessly from high-velocity to complex enterprise motions.</p>
-                    <p><strong>Revenue.io Alternative:</strong> Basic Salesforce account management with limited enterprise-specific features beyond standard CRM functionality.</p>
-                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach provides comprehensive enterprise capabilities needed for future state development.</span></p>
+                    <p><strong>Revenue.io Alternative:</strong> Standard Salesforce account and opportunity management with native compliance and security features.</p>
+                    <p><strong>Verdict:</strong> <span style="color: var(--primary); font-weight: 600;">Outreach provides purpose-built enterprise capabilities, Revenue.io leverages Salesforce standard functionality.</span></p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Revenue.io Constraints -->
+        <section id="constraints" class="section">
+            <div class="container">
+                <h2>Revenue.io Constraints</h2>
+                
+                <div class="constraints-box">
+                    <h3>Platform Considerations for Informed Decision Making</h3>
+                    <p>
+                        While Revenue.io offers several strengths as a Salesforce-native platform, organizations should carefully evaluate these documented limitations when considering the platform for complex, high-scale sales operations.
+                    </p>
+                </div>
+                
+                <div class="constraints-category">
+                    <h4>Platform Architecture Constraints</h4>
+                    <ul class="constraints-list">
+                        <li><strong>Salesforce Governor Limits Impact:</strong> All automation runs within Salesforce's transaction limits, which can constrain complex workflows and high-volume operations</li>
+                        <li><strong>Limited External System Integration:</strong> Integration options restricted to systems that can push data into Salesforce, limiting ML system connectivity</li>
+                        <li><strong>Future Integration Flexibility:</strong> Advanced analytics and external data warehouse integration constrained by Salesforce's API and data model</li>
+                    </ul>
+                </div>
+                
+                <div class="constraints-category">
+                    <h4>Automation Limitations</h4>
+                    <ul class="constraints-list">
+                        <li><strong>Workflow Complexity:</strong> Sequence automation limited to Salesforce Flow and Process Builder complexity, which may not support extremely sophisticated conditional logic</li>
+                        <li><strong>Manual Process Dependencies:</strong> No documented automated ownership propagation for sequences, likely requiring manual intervention for complex territory changes</li>
+                        <li><strong>High-Volume Processing:</strong> Sequential processing requirements may create bottlenecks in high-volume scenarios like Procare's 75+ daily calls per rep</li>
+                    </ul>
+                </div>
+                
+                <div class="constraints-category">
+                    <h4>Enterprise Feature Considerations</h4>
+                    <ul class="constraints-list">
+                        <li><strong>Account Management Tools:</strong> No purpose-built account planning or mutual action plan features beyond Salesforce standard functionality</li>
+                        <li><strong>Enterprise Selling Capabilities:</strong> Missing specialized enterprise selling tools like advanced relationship mapping for complex deal coordination</li>
+                        <li><strong>Reporting Framework:</strong> Analytics capabilities bounded by Salesforce reporting framework, which may require additional licenses for advanced features</li>
+                    </ul>
+                </div>
+                
+                <div class="constraints-category">
+                    <h4>Multi-Motion Support Considerations</h4>
+                    <ul class="constraints-list">
+                        <li><strong>Specialized Team Workflows:</strong> All teams must work within Salesforce's interface limitations, which may not optimize for diverse sales motions</li>
+                        <li><strong>Customer Success Features:</strong> Post-sale team capabilities may not match specialized customer success platform functionality</li>
+                        <li><strong>Implementation Complexity:</strong> Complex use cases may require custom Apex or Lightning development, necessitating deep Salesforce expertise</li>
+                    </ul>
+                </div>
+                
+                <div class="constraints-category">
+                    <h4>Scalability and Performance</h4>
+                    <ul class="constraints-list">
+                        <li><strong>Enterprise Scale Validation:</strong> Limited track record with Fortune 500-scale implementations compared to proven enterprise platforms</li>
+                        <li><strong>High Transaction Volumes:</strong> Performance at high transaction volumes not extensively documented for organizations like Procare's scale</li>
+                        <li><strong>Platform Dependency:</strong> Complete reliance on Salesforce's infrastructure and roadmap may limit customization beyond native capabilities</li>
+                    </ul>
+                </div>
+                
+                <div class="initiative-card">
+                    <h3>Strategic Considerations</h3>
+                    <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
+                        These constraints don't disqualify Revenue.io as a viable option, but organizations should carefully assess whether these limitations align with their current needs and growth trajectory. For organizations with straightforward sales motions seeking to minimize technical complexity, Revenue.io's Salesforce-native approach offers significant administrative simplicity.
+                    </p>
+                    <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
+                        However, for complex automation requirements, multi-system integrations, or specialized sales motions like Procare's multi-motion organization, these constraints may significantly impact platform effectiveness and long-term scalability.
+                    </p>
                 </div>
             </div>
         </section>
@@ -1485,12 +1643,12 @@
                 <h2>Strategic Recommendation</h2>
                 
                 <div class="outreach-advantage-box">
-                    <h3>Why Outreach is the Clear Strategic Choice for Procare</h3>
+                    <h3>Why Outreach is the Strategic Choice for Procare</h3>
                     <p>
-                        <strong>Immediate Crisis Resolution:</strong> Outreach's enterprise-grade automation eliminates current SalesLoft failures threatening operational stability. Proven 99.9% reliability with Fortune 500 customers provides the platform stability Procare requires.
+                        <strong>Immediate Crisis Resolution:</strong> Outreach's enterprise-grade automation with 99.9% uptime SLA eliminates current SalesLoft failures threatening operational stability. Proven reliability with Fortune 500 customers provides the platform stability Procare requires.
                     </p>
                     <p>
-                        <strong>Strategic Initiative Enablement:</strong> Advanced guided selling capabilities replicate Jeff's success across all territories, while sophisticated expansion workflows support Katie's TE attachment strategy and major company OKR achievement.
+                        <strong>Strategic Initiative Enablement:</strong> Advanced guided selling capabilities and sophisticated expansion workflows support both Jeff's forecasting replication and Katie's TE attachment strategy for major company OKR achievement.
                     </p>
                     <p>
                         <strong>Operational Efficiency:</strong> Automated ownership propagation immediately eliminates Kassie's 8+ hour weekly burden, while intelligent activity routing solves complex multi-object logging challenges.
@@ -1582,7 +1740,7 @@
                                 <h5 style="color: var(--primary); margin-bottom: 8px;">Operational Efficiency</h5>
                                 <ul style="font-size: 14px; line-height: 1.6; list-style: none; padding-left: 0;">
                                     <li>✓ Eliminate 8+ hours weekly manual work</li>
-                                    <li>✓ 99.9% automation reliability</li>
+                                    <li>✓ 99.9% platform uptime reliability</li>
                                     <li>✓ Zero data integrity issues</li>
                                 </ul>
                             </div>
@@ -1612,7 +1770,7 @@
                         <strong>Outreach represents the strategic choice that addresses Procare's immediate automation crisis while enabling long-term growth initiatives.</strong> The platform's enterprise-grade reliability eliminates current operational instability, while advanced capabilities support guided selling standardization, TE attachment optimization, and future enterprise motion development.
                     </p>
                     <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
-                        While Revenue.io offers administrative simplicity through its Salesforce-native approach, the platform's constraints limit automation sophistication and multi-motion support that Procare requires. Revenue.io is better suited for organizations with straightforward sales motions seeking to minimize technical complexity.
+                        While Revenue.io offers administrative simplicity through its Salesforce-native approach and provides AI-driven customer success insights, the platform's automation capabilities are constrained by Salesforce limits, and it lacks specialized features for complex multi-motion support that Procare requires.
                     </p>
                     <p style="font-size: 16px; line-height: 1.8; margin: 20px 0;">
                         <strong>For Procare's December 2025 deadline, complex automation requirements, and ambitious growth trajectory, Outreach provides the enterprise-grade platform capabilities needed to solve immediate challenges and support strategic objectives.</strong>
@@ -1686,4 +1844,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
